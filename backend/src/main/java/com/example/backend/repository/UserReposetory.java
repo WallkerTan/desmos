@@ -40,7 +40,7 @@ public interface UserReposetory extends JpaRepository<User, Long> {
     @Query("UPDATE User u SET u.falseLogin = :falseLogin, u.lockUntil = :lockUntil WHERE u.id = :userId")
     void updateLoginAttempts(@Param("userId") Long userId,
                              @Param("falseLogin") Integer falseLogin,
-                             @Param("lockUntil") java.security.Timestamp lockUntil);
+                             @Param("lockUntil") java.sql.Timestamp lockUntil);
 
     // Reset số lần đăng nhập sai khi đăng nhập thành công
     @Modifying

@@ -1,9 +1,39 @@
 package com.example.backend.exception;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
-public class UnauthorizedException extends AppException {
-    public UnauthorizedException(String message) {
-        super(message, HttpStatus.UNAUTHORIZED);
+@Component
+@Slf4j
+public class UnauthorizedException implements AuthenticationEntryPoint {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException, ServletException {
+
+        log.warn("401 Unauthorized: {}", authException.getMessage());
+
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json;charset=UTF-8");
+
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "401");
+        errorResponse.put("error", "Unauthorized");
+        errorResponse.put("message", "Quyền hạn không đủ để truy cập, vui lòng đăng nhập lại");
+        errorResponse.put("path", request.getRequestURI());
+
+        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
     }
 }

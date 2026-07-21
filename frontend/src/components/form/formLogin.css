@@ -1,0 +1,27 @@
+.desmos{
+      font-family: 'Oswald Variable', sans-serif;
+}
+.fgp{
+    padding: 10px;
+    width: 87%;
+    position: relative;
+    left: 2px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+.fgp:hover{
+    background-color: rgb(246, 246, 246);
+}
+.cna{
+    padding: 10px;
+    width: 87%;
+    position: relative;
+    left: 2px;
+    border-radius: 20px;
+    cursor: pointer;
+    border-radius: 20px;
+    border: 1px solid black;
+    margin-top: 10px;
+}
